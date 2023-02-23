@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Course, sortCoursesBySeqNo } from '../model/course';
-import { interval, noop, Observable, of, throwError, timer } from 'rxjs';
-import { catchError, delay, delayWhen, filter, finalize, map, retryWhen, shareReplay, tap } from 'rxjs/operators';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { CourseDialogComponent } from '../course-dialog/course-dialog.component';
+import { Course, sortCoursesBySeqNo } from '../model/course';
 import { CoursesService } from '../services/courses.service';
 
 
@@ -39,8 +39,6 @@ export class HomeComponent implements OnInit {
     this.advancedCourses$ = courses$.pipe(
       map(courses => courses.filter(course => course.category == "ADVANCED"))
     );
-
-
   }
 
   editCourse(course: Course) {
