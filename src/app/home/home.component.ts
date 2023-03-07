@@ -16,9 +16,14 @@ export class HomeComponent implements OnInit {
 
   advancedCourses$: Observable<Course[]>;
 
-  constructor(private coursesService: CoursesService) {}
+  constructor(private coursesService: CoursesService) { }
 
   ngOnInit() {
+    this.reloadCourses();
+
+  }
+
+  reloadCourses() {
     const courses$ = this.coursesService
       .loadAllCourses()
       .pipe(map((courses) => courses.sort(sortCoursesBySeqNo)));

@@ -1,12 +1,10 @@
-.course-card {
-  margin: 20px 10px;
+.course-action {
+display: flex;
+justify-self: center;
 }
 
-.course-actions {
-  display: flex;
-  justify-content: center;
+mat-card {
+  padding-bottom: 3%;
 }
 
-.course-actions button {
-  margin-right: 5px;
-}
+
