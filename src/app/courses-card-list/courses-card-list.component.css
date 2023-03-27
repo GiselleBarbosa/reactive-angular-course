@@ -1,10 +1,8 @@
 .course-action {
-display: flex;
-justify-self: center;
+  display: flex;
+  justify-self: center;
 }
 
 mat-card {
   padding-bottom: 3%;
 }
-
-

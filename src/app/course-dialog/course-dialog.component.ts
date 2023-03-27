@@ -1,19 +1,17 @@
-import {
-  AfterViewInit,
-  Component,
-  Inject
-} from "@angular/core";
+import { AfterViewInit, Component, Inject } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import * as moment from "moment";
 import { Course } from "../model/course";
-import { CoursesService } from '../services/courses.service';
-import { LoadingService } from '../loading/loading.service';
+import { CoursesService } from "../services/courses.service";
+import { LoadingService } from "../loading/loading.service";
+import { saveCourse } from "../../../server/save-course.route";
 
 @Component({
   selector: "course-dialog",
   templateUrl: "./course-dialog.component.html",
   styleUrls: ["./course-dialog.component.css"],
+  providers: [LoadingService],
 })
 export class CourseDialogComponent implements AfterViewInit {
   form: FormGroup;
@@ -25,7 +23,7 @@ export class CourseDialogComponent implements AfterViewInit {
     private dialogRef: MatDialogRef<CourseDialogComponent>,
     @Inject(MAT_DIALOG_DATA) course: Course,
     private coursesService: CoursesService,
-    private loading: LoadingService
+    private loadingService: LoadingService
   ) {
     this.course = course;
 
@@ -37,18 +35,21 @@ export class CourseDialogComponent implements AfterViewInit {
     });
   }
 
-  ngAfterViewInit() { }
+  ngAfterViewInit() {}
 
   save() {
     const changes = this.form.value;
 
-    this.coursesService.saveCourses(this.course.id, changes)
-      .subscribe(
-        val => {
-          this.dialogRef.close(val);
-        }
-      );
+    const saveCourse$ = this.coursesService.saveCourses(
+      this.course.id,
+      changes
+    );
 
+    this.loadingService
+      .showLoadingUntilCompleted(saveCourse$)
+      .subscribe((val) => {
+        this.dialogRef.close(val);
+      });
   }
 
   close() {

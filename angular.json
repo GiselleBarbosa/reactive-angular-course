@@ -22,8 +22,7 @@
               "src/styles.scss",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": [
-             ],
+            "scripts": [],
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,
