@@ -1,8 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { Course } from "../model/course";
-import { LoadingService } from "../loading/loading.service";
-import { MessagesService } from "../messages/messages.service";
 import { CoursesStore } from '../services/courses.store';
 
 @Component({
