@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Course } from "../model/course";
 import { Observable } from "rxjs";
-import { map, shareReplay } from "rxjs/operators";
+import { map, share, shareReplay } from "rxjs/operators";
 import { searchLessons } from "../../../server/search-lessons.route";
 import { Lesson } from "../model/lesson";
 
@@ -11,6 +11,26 @@ import { Lesson } from "../model/lesson";
 })
 export class CoursesService {
   constructor(private http: HttpClient) {}
+
+  loadCourseById(courseId: number) {
+    return this.http
+      .get<Course>(`/api/courses/${courseId}`)
+      .pipe(shareReplay());
+  }
+
+  loadAllCourseLessons(courseId: number): Observable<Lesson[]> {
+    return this.http
+      .get<Lesson[]>("/api/lessons", {
+        params: {
+          pageSize: "10000",
+          courseId: courseId.toString(),
+        },
+      })
+      .pipe(
+        map((res) => res["payload"]),
+        shareReplay()
+      );
+  }
 
   loadAllCourses(): Observable<Course[]> {
     return this.http.get<Course[]>("/api/courses").pipe(
