@@ -46,7 +46,7 @@ export class CoursesStore {
 
     const newCourse: Course = {
       ...courses[index],
-      ...changes
+      ...changes,
     };
 
     const newCourses: Course[] = courses.slice(0);
